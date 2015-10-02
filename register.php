@@ -38,10 +38,28 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
+                            <?php
+                                if (isset($_SESSION['email']))
+                                {
+                                    echo "<li><a href=\"account.php\"><i class=\"fa fa-user\"></i> My Account</a></li>";
+                                }
+                                else
+                                {
+                                    echo "<li><a href=\"login.php\"><i class=\"fa fa-user\"></i> My Account</a></li>";
+                                }
+                            ?>
                             <li><a href="cart.php"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="checkout.php"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="login.php"><i class="fa fa-user"></i> Login</a></li>
+                            <?php
+                                if (isset($_SESSION['email']))
+                                {
+                                    echo "<li><a href=\"logout.php\"><i class=\"fa fa-user\"></i> Logout</a></li>";
+                                }
+                                else
+                                {
+                                    echo "<li><a href=\"login.php\"><i class=\"fa fa-user\"></i> Login</a></li>";
+                                }
+                            ?>
                             <li><a href="register.php"><i class="fa fa-user"></i> Register</a></li>
                         </ul>
                     </div>
@@ -180,7 +198,7 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">User Navigation </h2>
                         <ul>
-                            <li><a href="#">My account</a></li>
+                            <li><a href="account.php">My account</a></li>
                             <li><a href="#">Order history</a></li>
                             <li><a href="#">Wishlist</a></li>
                             <li><a href="#">Vendor contact</a></li>

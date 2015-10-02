@@ -40,10 +40,28 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
+                            <?php
+                                if (isset($_SESSION['email']))
+                                {
+                                    echo "<li><a href=\"account.php\"><i class=\"fa fa-user\"></i> My Account</a></li>";
+                                }
+                                else
+                                {
+                                    echo "<li><a href=\"login.php\"><i class=\"fa fa-user\"></i> My Account</a></li>";
+                                }
+                            ?>
                             <li><a href="cart.php"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="checkout.php"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="login.php"><i class="fa fa-user"></i> Login</a></li>
+                            <?php
+                                if (isset($_SESSION['email']))
+                                {
+                                    echo "<li><a href=\"logout.php\"><i class=\"fa fa-user\"></i> Logout</a></li>";
+                                }
+                                else
+                                {
+                                    echo "<li><a href=\"login.php\"><i class=\"fa fa-user\"></i> Login</a></li>";
+                                }
+                            ?>
                             <li><a href="register.php"><i class="fa fa-user"></i> Register</a></li>
                         </ul>
                     </div>
@@ -204,6 +222,34 @@
                     }
                 ?>
             </form>
+            <form action="#" method="POST">
+                <h2 class="account-info">Change Password: </h2>
+                <input class="input-lg" name="cpass" type="password" placeholder="Current Password" required>
+                <input class="input-lg" name="npass" type="password" placeholder="New Password" required>
+                <input type="submit" value="Change Password"><br/><br/>
+                <?php
+                    if (isset($_POST) && array_key_exists('cpass', $_POST) && array_key_exists('npass', $_POST))
+                    {
+                        $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                        if (mysqli_connect_errno($mysqli)) {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        $check = "SELECT COUNT(*) AS ex FROM `testphp`.`users` WHERE `users`.`email` = '$_SESSION[email]' AND `users`.`_password` = '$_POST[cpass]'";
+                        $result = mysqli_query($mysqli, $check);
+                        $row = mysqli_fetch_assoc($result);
+                        if ($row['ex'] == 0)
+                        {
+                            echo "<script>alert(\"Current password is incorrect!!\");</script>";
+                        }
+                        else
+                        {
+                            $query = "UPDATE `testphp`.`users` SET `_password` = '$_POST[npass]' WHERE `users`.`email` = '$_SESSION[email]'";
+                            mysqli_query($mysqli, $query);
+                        }
+                        echo '<script>window.location.href = "account.php"</script>';
+                    }
+                ?>
+            </form>
         </div>
     </div>
 
@@ -228,7 +274,7 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">User Navigation </h2>
                         <ul>
-                            <li><a href="#">My account</a></li>
+                            <li><a href="account.php">My account</a></li>
                             <li><a href="#">Order history</a></li>
                             <li><a href="#">Wishlist</a></li>
                             <li><a href="#">Vendor contact</a></li>
