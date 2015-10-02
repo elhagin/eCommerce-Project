@@ -89,7 +89,7 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.php">Cart - <span class="cart-amunt"><?php echo $cart_total_price; ?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php echo $cart_total_items; ?></span></a>
+                        <a href="cart.php">Cart - <span class="cart-amunt"><?php echo "$".$cart_total_price; ?></span> <i class="fa fa-shopping-cart"></i> <span class="product-count"><?php echo $cart_total_items; ?></span></a>
                     </div>
                 </div>
             </div>
