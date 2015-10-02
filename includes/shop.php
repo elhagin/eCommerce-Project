@@ -1,5 +1,5 @@
 <?php
-	$_SESSION['id'] = 1; 
+	
 
 	if(isset($_GET['action']) and $_GET['action'] == 'add'){
 		$user->addToCart(intval($_GET['id']));

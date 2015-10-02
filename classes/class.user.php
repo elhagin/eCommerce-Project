@@ -58,7 +58,7 @@
 				try {
 					
 					//delete this fucking line
-					$_SESSION['id'] = 1;
+					
 					//until here :D
 					$prod = $this->getaProductByID($product_id);
 					
@@ -133,7 +133,7 @@
 			}
 			function getCartItemsCount($owner_id){
 				try {
-					
+
 					$stmt = $this->db->prepare('SELECT SUM(quantity) AS totalitems
 						FROM  `cart-items`
 						WHERE buyer_id = :buyerID');
