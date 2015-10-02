@@ -152,9 +152,10 @@
                                 <?php
                                 if (isset($_POST) && array_key_exists('email', $_POST) && array_key_exists('pass', $_POST) && array_key_exists('fname', $_POST) && array_key_exists('lname', $_POST) && array_key_exists('address', $_POST) && array_key_exists('phone', $_POST) && array_key_exists('avatar', $_POST))
                                 {
-                                    $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                                    $mysqli = mysqli_connect("localhost:3306", "root", "", "ecommerce");
                                     if (mysqli_connect_errno($mysqli)) {
-                                        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                                        echo "Fsailed to connect to MySQL: " . mysqli_connect_error();
+
                                     }
                                     $check = "SELECT COUNT(*) AS ex FROM users WHERE email = '$_POST[email]'";
                                     $result = mysqli_query($mysqli, $check);

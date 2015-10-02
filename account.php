@@ -142,9 +142,9 @@
     <div id="user-info">
         <div class="signup-form container">
             <?php
-                $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                 if (mysqli_connect_errno($mysqli)) {
-                    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                    echo "GFailed to connect to MySQL: " . mysqli_connect_error();
                 }
                 $q = "SELECT first_name AS fname, last_name AS lname, avatar_url AS avatar FROM users WHERE email = '$_SESSION[email]'";
                 $result = mysqli_query($mysqli, $q);
@@ -160,7 +160,7 @@
                 <?php
                     if (isset($_POST) && array_key_exists('email', $_POST))
                     {
-                        $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
@@ -178,7 +178,7 @@
                 <?php
                     if (isset($_POST) && array_key_exists('fname', $_POST))
                     {
-                        $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
@@ -195,7 +195,7 @@
                 <?php
                     if (isset($_POST) && array_key_exists('lname', $_POST))
                     {
-                        $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
@@ -212,7 +212,7 @@
                 <?php
                     if (isset($_POST) && array_key_exists('avatar', $_POST))
                     {
-                        $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
@@ -230,7 +230,7 @@
                 <?php
                     if (isset($_POST) && array_key_exists('cpass', $_POST) && array_key_exists('npass', $_POST))
                     {
-                        $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }

@@ -147,7 +147,7 @@
                                 <?php
                                 if (isset($_POST) && array_key_exists('email', $_POST) && array_key_exists('pass', $_POST))
                                 {
-                                    $mysqli = mysqli_connect("localhost:3306", "root", "", "testphp");
+                                    $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                                     if (mysqli_connect_errno($mysqli)) {
                                         echo "Failed to connect to MySQL: " . mysqli_connect_error();
                                     }
