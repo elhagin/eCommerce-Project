@@ -164,7 +164,7 @@
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
-                        $query = "UPDATE `testphp`.`users` SET `email` = '$_POST[email]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        $query = "UPDATE `ecommerce`.`users` SET `email` = '$_POST[email]' WHERE `users`.`email` = '$_SESSION[email]'";
                         mysqli_query($mysqli, $query);
                         $_SESSION['email'] = $_POST['email'];
                         echo '<script>window.location.href = "account.php"</script>';
@@ -182,7 +182,7 @@
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
-                        $query = "UPDATE `testphp`.`users` SET `first_name` = '$_POST[fname]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        $query = "UPDATE `ecommerce`.`users` SET `first_name` = '$_POST[fname]' WHERE `users`.`email` = '$_SESSION[email]'";
                         mysqli_query($mysqli, $query);
                         echo '<script>window.location.href = "account.php"</script>';
                     }
@@ -199,7 +199,7 @@
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
-                        $query = "UPDATE `testphp`.`users` SET `last_name` = '$_POST[lname]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        $query = "UPDATE `ecommerce`.`users` SET `last_name` = '$_POST[lname]' WHERE `users`.`email` = '$_SESSION[email]'";
                         mysqli_query($mysqli, $query);
                         echo '<script>window.location.href = "account.php"</script>';
                     }
@@ -216,7 +216,7 @@
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
-                        $query = "UPDATE `testphp`.`users` SET `avatar_url` = '$_POST[avatar]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        $query = "UPDATE `ecommerce`.`users` SET `avatar_url` = '$_POST[avatar]' WHERE `users`.`email` = '$_SESSION[email]'";
                         mysqli_query($mysqli, $query);
                         echo '<script>window.location.href = "account.php"</script>';
                     }
@@ -234,7 +234,7 @@
                         if (mysqli_connect_errno($mysqli)) {
                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
                         }
-                        $check = "SELECT COUNT(*) AS ex FROM `testphp`.`users` WHERE `users`.`email` = '$_SESSION[email]' AND `users`.`_password` = '$_POST[cpass]'";
+                        $check = "SELECT COUNT(*) AS ex FROM `ecommerce`.`users` WHERE `users`.`email` = '$_SESSION[email]' AND `users`.`_password` = '$_POST[cpass]'";
                         $result = mysqli_query($mysqli, $check);
                         $row = mysqli_fetch_assoc($result);
                         if ($row['ex'] == 0)
@@ -243,7 +243,7 @@
                         }
                         else
                         {
-                            $query = "UPDATE `testphp`.`users` SET `_password` = '$_POST[npass]' WHERE `users`.`email` = '$_SESSION[email]'";
+                            $query = "UPDATE `ecommerce`.`users` SET `_password` = '$_POST[npass]' WHERE `users`.`email` = '$_SESSION[email]'";
                             mysqli_query($mysqli, $query);
                         }
                         echo '<script>window.location.href = "account.php"</script>';
