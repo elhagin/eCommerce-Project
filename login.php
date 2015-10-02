@@ -143,33 +143,35 @@
                             <form class="form-control" action="#" method="POST">
                                 <input class="input-lg" name="email" type="email" placeholder="E-mail" required><br/><br/>
                                 <input class="input-lg" name="pass" type="password" placeholder="Password" required><br/><br/>
-                                <input class="input-lg" name="fname" type="text" placeholder="First Name" required><br/><br/>
-                                <input class="input-lg" name="lname" type="text" placeholder="Last Name" required><br/><br/>
-                                <input class="input-lg" name="address" type="text" placeholder="Address" required><br/><br/>
-                                <input class="input-lg" name="phone" type="text" placeholder="Phone" required><br/><br/>
-                                <input class="input-lg" name="avatar" type="text" placeholder="Avatar URL" required><br/><br/>
-                                <input type="submit" value="Sign Up"><br/><br/>
+                                <input type="submit" value="Log In"><br/><br/>
                                 <?php
-                                if (isset($_POST) && array_key_exists('email', $_POST) && array_key_exists('pass', $_POST) && array_key_exists('fname', $_POST) && array_key_exists('lname', $_POST) && array_key_exists('address', $_POST) && array_key_exists('phone', $_POST) && array_key_exists('avatar', $_POST))
+                                if (isset($_POST) && array_key_exists('email', $_POST) && array_key_exists('pass', $_POST))
                                 {
-                                    $mysqli = mysqli_connect("localhost:3306", "root", "", "ecommerce");
+                                    $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
                                     if (mysqli_connect_errno($mysqli)) {
-                                        echo "Fsailed to connect to MySQL: " . mysqli_connect_error();
-
+                                        echo "Failed to connect to MySQL: " . mysqli_connect_error();
                                     }
-                                    $check = "SELECT COUNT(*) AS ex FROM users WHERE email = '$_POST[email]'";
-                                    $result = mysqli_query($mysqli, $check);
-                                    $row = mysqli_fetch_assoc($result);
-                                    if ($row['ex'] != 0)
+                                    $checkEmail = "SELECT COUNT(*) AS ex FROM users WHERE email = '$_POST[email]'";
+                                    $checkPass = "SELECT COUNT(*) AS ex FROM users WHERE email = '$_POST[email]' AND _password = '$_POST[pass]'";
+                                    $resultEmail = mysqli_query($mysqli, $checkEmail);
+                                    $resultPass = mysqli_query($mysqli, $checkPass);
+                                    $rowEmail = mysqli_fetch_assoc($resultEmail);
+                                    $rowPass = mysqli_fetch_assoc($resultPass);
+                                    if ($rowEmail['ex'] == 0)
                                     {
-                                        echo '<script>alert("That user already exists!")</script>';
+                                        echo '<script>alert("That e-mail is not registered!")</script>';
                                     }
                                     else
                                     {
-                                        $query = "INSERT INTO users(email, _password, first_name, last_name, address, phone, avatar_url) VALUES('$_POST[email]', '$_POST[pass]', '$_POST[fname]', '$_POST[lname]', '$_POST[address]', '$_POST[phone]', '$_POST[avatar]')";
-                                        mysqli_query($mysqli, $query);
-                                        $_SESSION['email'] = $_POST['email'];
-                                        echo '<script>window.location.href = "account.php"</script>';
+                                        if ($rowPass['ex'] == 0)
+                                        {
+                                            echo '<script>alert("Password is incorrect!")</script>';
+                                        }       
+                                        else
+                                        {
+                                            $_SESSION['email'] = $_POST['email'];
+                                            echo '<script>window.location.href = "account.php"</script>';
+                                        }
                                     }
                                 }
                                 ?>

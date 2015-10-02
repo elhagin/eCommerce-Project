@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<?php session_start() ?>
+<?php 
+    session_start();
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -138,44 +140,117 @@
     </div> <!-- End mainmenu area -->
 
     <div id="user-info">
-        <form action="#" method="POST">
-            <div class="signup-form container">
-                            <form class="form-control" action="#" method="POST">
-                                <input class="input-lg" name="email" type="email" placeholder="E-mail" required><br/><br/>
-                                <input class="input-lg" name="pass" type="password" placeholder="Password" required><br/><br/>
-                                <input class="input-lg" name="fname" type="text" placeholder="First Name" required><br/><br/>
-                                <input class="input-lg" name="lname" type="text" placeholder="Last Name" required><br/><br/>
-                                <input class="input-lg" name="address" type="text" placeholder="Address" required><br/><br/>
-                                <input class="input-lg" name="phone" type="text" placeholder="Phone" required><br/><br/>
-                                <input class="input-lg" name="avatar" type="text" placeholder="Avatar URL" required><br/><br/>
-                                <input type="submit" value="Sign Up"><br/><br/>
-                                <?php
-                                if (isset($_POST) && array_key_exists('email', $_POST) && array_key_exists('pass', $_POST) && array_key_exists('fname', $_POST) && array_key_exists('lname', $_POST) && array_key_exists('address', $_POST) && array_key_exists('phone', $_POST) && array_key_exists('avatar', $_POST))
-                                {
-                                    $mysqli = mysqli_connect("localhost:3306", "root", "", "ecommerce");
-                                    if (mysqli_connect_errno($mysqli)) {
-                                        echo "Fsailed to connect to MySQL: " . mysqli_connect_error();
-
-                                    }
-                                    $check = "SELECT COUNT(*) AS ex FROM users WHERE email = '$_POST[email]'";
-                                    $result = mysqli_query($mysqli, $check);
-                                    $row = mysqli_fetch_assoc($result);
-                                    if ($row['ex'] != 0)
-                                    {
-                                        echo '<script>alert("That user already exists!")</script>';
-                                    }
-                                    else
-                                    {
-                                        $query = "INSERT INTO users(email, _password, first_name, last_name, address, phone, avatar_url) VALUES('$_POST[email]', '$_POST[pass]', '$_POST[fname]', '$_POST[lname]', '$_POST[address]', '$_POST[phone]', '$_POST[avatar]')";
-                                        mysqli_query($mysqli, $query);
-                                        $_SESSION['email'] = $_POST['email'];
-                                        echo '<script>window.location.href = "account.php"</script>';
-                                    }
-                                }
-                                ?>
-                            </form>
-            </div>
-        </form>
+        <div class="signup-form container">
+            <?php
+                $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
+                if (mysqli_connect_errno($mysqli)) {
+                    echo "GFailed to connect to MySQL: " . mysqli_connect_error();
+                }
+                $q = "SELECT first_name AS fname, last_name AS lname, avatar_url AS avatar FROM users WHERE email = '$_SESSION[email]'";
+                $result = mysqli_query($mysqli, $q);
+                $row = mysqli_fetch_assoc($result);
+                $fname = $row['fname'];
+                $lname = $row['lname'];
+                $avatar = $row['avatar'];
+            ?>
+            <form action="#" method="POST">
+                <h2 class="account-info">Current Email: </h2><?php echo "<p class=\"account-info-data\">$_SESSION[email]</p>" ?><br>
+                <input class="input-lg" name="email" type="email" placeholder="New Email" required>
+                <input type="submit" value="Change Email"><br/><br/>
+                <?php
+                    if (isset($_POST) && array_key_exists('email', $_POST))
+                    {
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
+                        if (mysqli_connect_errno($mysqli)) {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        $query = "UPDATE `testphp`.`users` SET `email` = '$_POST[email]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        mysqli_query($mysqli, $query);
+                        $_SESSION['email'] = $_POST['email'];
+                        echo '<script>window.location.href = "account.php"</script>';
+                    }
+                ?>
+            </form>
+            <form action="#" method="POST">
+                <h2 class="account-info">First Name: </h2><?php echo "<p class=\"account-info-data\">$fname</p>" ?><br/>
+                <input class="input-lg" name="fname" type="text" placeholder="New First Name" required>
+                <input type="submit" value="Change Name"><br/><br/>
+                <?php
+                    if (isset($_POST) && array_key_exists('fname', $_POST))
+                    {
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
+                        if (mysqli_connect_errno($mysqli)) {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        $query = "UPDATE `testphp`.`users` SET `first_name` = '$_POST[fname]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        mysqli_query($mysqli, $query);
+                        echo '<script>window.location.href = "account.php"</script>';
+                    }
+                ?>
+            </form>
+            <form action="#" method="POST">
+                <h2 class="account-info">Last Name: </h2><?php echo "<p class=\"account-info-data\">$lname</p>" ?><br/>
+                <input class="input-lg" name="lname" type="text" placeholder="New Last Name" required>
+                <input type="submit" value="Change Name"><br/><br/>
+                <?php
+                    if (isset($_POST) && array_key_exists('lname', $_POST))
+                    {
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
+                        if (mysqli_connect_errno($mysqli)) {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        $query = "UPDATE `testphp`.`users` SET `last_name` = '$_POST[lname]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        mysqli_query($mysqli, $query);
+                        echo '<script>window.location.href = "account.php"</script>';
+                    }
+                ?>
+            </form>
+            <form action="#" method="POST">
+                <h2 class="account-info">Avatar: </h2><?php echo "<img src=\"$avatar\"><br/>" ?><br/>
+                <input class="input-lg" name="avatar" type="text" placeholder="New Avatar URL" required>
+                <input type="submit" value="Change Avatar URL"><br/><br/>
+                <?php
+                    if (isset($_POST) && array_key_exists('avatar', $_POST))
+                    {
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
+                        if (mysqli_connect_errno($mysqli)) {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        $query = "UPDATE `testphp`.`users` SET `avatar_url` = '$_POST[avatar]' WHERE `users`.`email` = '$_SESSION[email]'";
+                        mysqli_query($mysqli, $query);
+                        echo '<script>window.location.href = "account.php"</script>';
+                    }
+                ?>
+            </form>
+            <form action="#" method="POST">
+                <h2 class="account-info">Change Password: </h2>
+                <input class="input-lg" name="cpass" type="password" placeholder="Current Password" required>
+                <input class="input-lg" name="npass" type="password" placeholder="New Password" required>
+                <input type="submit" value="Change Password"><br/><br/>
+                <?php
+                    if (isset($_POST) && array_key_exists('cpass', $_POST) && array_key_exists('npass', $_POST))
+                    {
+                        $mysqli = mysqli_connect("localhost", "root", "", "ecommerce",3306);
+                        if (mysqli_connect_errno($mysqli)) {
+                            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        }
+                        $check = "SELECT COUNT(*) AS ex FROM `testphp`.`users` WHERE `users`.`email` = '$_SESSION[email]' AND `users`.`_password` = '$_POST[cpass]'";
+                        $result = mysqli_query($mysqli, $check);
+                        $row = mysqli_fetch_assoc($result);
+                        if ($row['ex'] == 0)
+                        {
+                            echo "<script>alert(\"Current password is incorrect!!\");</script>";
+                        }
+                        else
+                        {
+                            $query = "UPDATE `testphp`.`users` SET `_password` = '$_POST[npass]' WHERE `users`.`email` = '$_SESSION[email]'";
+                            mysqli_query($mysqli, $query);
+                        }
+                        echo '<script>window.location.href = "account.php"</script>';
+                    }
+                ?>
+            </form>
+        </div>
     </div>
 
     <div class="footer-top-area">
